@@ -1,0 +1,14 @@
+
+
+declare lower;
+
+input period = 100;
+input price_range = 0.05;
+
+def minhigh = Highest(high,period) - price_range;
+
+def taps = fold index=0 to period-1 with p do p + if high[index] >= minhigh then 1 else 0;
+
+plot "NumTaps" = taps;
+
+"NumTaps".DefineColor("Normal", GetColor(7));

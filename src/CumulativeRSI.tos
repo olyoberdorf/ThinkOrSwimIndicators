@@ -7,13 +7,13 @@ input num_rsis = 2;
 
 def rsi = reference RSI(price = close, length = rsi_length);
 
-plot “Cumulative RSI” = fold index = 0 to num_rsis with p do p + rsi[index];
+plot "Cumulative RSI" = fold index = 0 to num_rsis with p do p + rsi[index];
 plot OverBought = over_Bought;
 plot OverSold = over_Sold;
 
-“Cumulative RSI”.DefineColor(“OverBought”, GetColor(5));
-“Cumulative RSI”.DefineColor(“Normal”, GetColor(7));
-“Cumulative RSI”.DefineColor(“OverSold”, GetColor(1));
-“Cumulative RSI”.AssignValueColor(if “Cumulative RSI” > over_Bought then “Cumulative RSI”.Color(“OverBought”) else if “Cumulative RSI” < over_Sold then “Cumulative RSI”.Color(“OverSold”) else “Cumulative RSI”.Color(“Normal”));
+"Cumulative RSI".DefineColor("OverBought", GetColor(5));
+"Cumulative RSI".DefineColor("Normal", GetColor(7));
+"Cumulative RSI".DefineColor("OverSold", GetColor(1));
+"Cumulative RSI".AssignValueColor(if "Cumulative RSI" > over_Bought then "Cumulative RSI".Color("OverBought") else if "Cumulative RSI" < over_Sold then "Cumulative RSI".Color("OverSold") else "Cumulative RSI".Color("Normal"));
 OverBought.SetDefaultColor(GetColor(8));
 OverSold.SetDefaultColor(GetColor(8));

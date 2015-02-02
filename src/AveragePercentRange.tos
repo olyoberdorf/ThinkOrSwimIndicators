@@ -4,6 +4,6 @@ input length = 20;
 
 def atr = ATRWilder(atr_length = length);
 
-plot “Average Percent Range” = 100 * atr / close;
+plot "Average Percent Range" = 100 * atr / close;
 
-“Average Percent Range”.SetDefaultColor(GetColor(7));
+"Average Percent Range".SetDefaultColor(GetColor(7));

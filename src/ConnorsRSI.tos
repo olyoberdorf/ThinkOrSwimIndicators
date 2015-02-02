@@ -1,0 +1,32 @@
+declare lower;
+
+input over_Sold = 10;
+input over_Bought = 90;
+input rsi_length=3;
+input streak_rsi_length=2;
+input percent_rank_length=100;
+
+def rsi = RSIWilder(price = close, length = rsi_length);
+rec streak = if streak[1] <= 0 and close < close[1] then         streak[1]-1      else if streak[1] >= 0 and close > close[1] then 
+        streak[1] + 1 
+    else 
+        0;
+rec ret = (close - close[1])/close[1];
+
+def streakrsi = RSIWilder(price = streak, length=streak_rsi_length);
+def percentrank = max(0,
+  min(100,
+    (100/percent_rank_length) 
+    * fold index = 1 to percent_rank_length 
+      with p do p + if ret > ret[index] then 1 else 0));
+
+plot "Connors RSI" = (rsi + streakrsi + percentrank)/3;
+plot OverBought = over_Bought;
+plot OverSold = over_Sold;
+
+"Connors RSI".DefineColor("OverBought", GetColor(5));
+"Connors RSI".DefineColor("Normal", GetColor(7));
+"Connors RSI".DefineColor("OverSold", GetColor(1));
+"Connors RSI".AssignValueColor(if "Connors RSI" > over_Bought then "Connors RSI".Color("OverBought") else if "Connors RSI" < over_Sold then "Connors RSI".Color("OverSold") else "Connors RSI".Color("Normal"));
+OverBought.SetDefaultColor(GetColor(8));
+OverSold.SetDefaultColor(GetColor(8));
